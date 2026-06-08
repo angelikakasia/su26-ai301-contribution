@@ -1,27 +1,17 @@
-# su26-ai301-contribution
-CodePath AI301 Open Source Contribution Journal
-Contribution Number: 1
-Student: Angelika Szymanowska
-Issue: https://github.com/cpinitiative/usaco-guide/issues/863
-Status: Phase I - Complete
-## Why I Chose This Issue
-I chose this issue because it is a good first contribution with a clear goal and scope. 
-It will help me learn more about memory optimization and how technical explanations are written in open-source projects. 
-I also want to gain experience contributing to GitHub projects and collaborating with maintainers.
-////////////
+# Contribution 1: Add ABI/SyscallABI Support for LoongArch64 + s390x
 
-# Contribution [#]: [Issue Title]
-
-**Contribution Number:** [1 / 2 / 3]  
-**Student:** [Your Name]  
-**Issue:** [GitHub issue link]  
-**Status:** [Phase I / Phase II / Phase III / Phase IV] [In Progress / Complete]
+**Contribution Number:** 1  
+**Student:** Angelika Szymanowska  
+**Issue:** https://github.com/pwndbg/pwndbg/issues/2889  
+**Status:** Phase I - Complete
 
 ---
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs explaining why this issue interests you, how it matches your skills/learning goals, what you hope to learn]
+I chose this issue because it combines Python development with low-level operating system concepts such as system calls and application binary interfaces (ABIs). As a cybersecurity student interested in reverse engineering, debugging, and system internals, I wanted to work on a contribution that would expose me to architecture-specific behavior in Linux systems.
+
+This issue also provides an opportunity to learn how Pwndbg and Pwntools represent syscall conventions across different processor architectures. Through this contribution, I hope to strengthen my Python skills, improve my understanding of Linux system calls, and gain practical experience contributing to an open-source cybersecurity project.
 
 ---
 
@@ -29,19 +19,21 @@ I also want to gain experience contributing to GitHub projects and collaborating
 
 ### Problem Description
 
-[In your own words, what's broken or missing?]
+Pwndbg currently supports ABI and syscall handling for several architectures including x86-64, ARM, AArch64, MIPS, PowerPC, and RISC-V. However, support for LoongArch64 and s390x is missing.
 
 ### Expected Behavior
 
-[What should happen?]
+Pwndbg should correctly recognize LoongArch64 and s390x architectures, identify their ABI definitions, and display syscall names and arguments correctly during debugging.
 
 ### Current Behavior
 
-[What actually happens?]
+LoongArch64 and s390x are not included in the ABI and syscall ABI mappings, preventing proper syscall decoding and architecture-specific handling.
 
 ### Affected Components
 
-[Which parts of the codebase are involved?]
+- `pwndbg/lib/abi.py`
+- `pwndbg/aglib/disasm/arch.py`
+- Related ABI and syscall handling logic
 
 ---
 
@@ -49,19 +41,22 @@ I also want to gain experience contributing to GitHub projects and collaborating
 
 ### Environment Setup
 
-[Notes on setting up your local development environment - challenges you faced, how you solved them]
+Phase II - Not Started
 
 ### Steps to Reproduce
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Clone the Pwndbg repository.
+2. Open `pwndbg/lib/abi.py`.
+3. Locate `DEFAULT_ABIS` and `SYSCALL_ABIS`.
+4. Observe that LoongArch64 and s390x are not present.
+5. Open `pwndbg/aglib/disasm/arch.py`.
+6. Observe that syscall name mappings for LoongArch64 and s390x are missing.
 
 ### Reproduction Evidence
 
-- **Commit showing reproduction:** [Link to commit in your fork]
-- **Screenshots/logs:** [If applicable]
-- **My findings:** [What you discovered during reproduction]
+- **Commit showing reproduction:** TBD
+- **Screenshots/logs:** TBD
+- **My findings:** Initial review indicates that ABI mappings and syscall architecture mappings for LoongArch64 and s390x have not been implemented.
 
 ---
 
@@ -69,30 +64,43 @@ I also want to gain experience contributing to GitHub projects and collaborating
 
 ### Analysis
 
-[Your analysis of the root cause - what's causing the issue?]
+The root cause appears to be missing architecture definitions in the ABI and syscall ABI mappings. Additional architecture-to-syscall-name mappings are also required.
 
 ### Proposed Solution
 
-[High-level description of your fix approach]
+Add LoongArch64 and s390x ABI definitions to the existing architecture mappings and update syscall architecture resolution to support both architectures.
 
 ### Implementation Plan
 
 Using UMPIRE framework (adapted):
 
-**Understand:** [Restate the problem]
+**Understand:** Pwndbg lacks ABI and syscall support for LoongArch64 and s390x.
 
-**Match:** [What similar patterns/solutions exist in the codebase?]
+**Match:** Existing implementations for AArch64, RISC-V, MIPS, and PowerPC provide examples of how architecture-specific ABIs are defined.
 
-**Plan:** [Step-by-step implementation plan]
-1. [Modify file X to do Y]
-2. [Add function Z]
-3. [Update tests]
+**Plan:**
 
-**Implement:** [Link to your branch/commits as you work]
+1. Review existing ABI definitions in `pwndbg/lib/abi.py`.
+2. Review equivalent definitions in Pwntools.
+3. Research LoongArch64 and s390x syscall conventions.
+4. Add ABI entries to `DEFAULT_ABIS`.
+5. Add syscall ABI entries to `SYSCALL_ABIS`.
+6. Update architecture mappings in `pwndbg/aglib/disasm/arch.py`.
+7. Verify compatibility with Pwndbg's modified `SyscallABI` implementation.
+8. Run project tests and validation checks.
 
-**Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
+**Implement:** TBD
 
-**Evaluate:** [How will you verify it works?]
+**Review:**
+
+- [ ] Follow project contribution guidelines
+- [ ] Follow project coding style
+- [ ] Ensure no existing architecture support is affected
+- [ ] Verify compatibility with SyscallABI implementation
+
+**Evaluate:**
+
+Confirm that LoongArch64 and s390x architectures are recognized and that syscall decoding behaves correctly.
 
 ---
 
@@ -100,50 +108,53 @@ Using UMPIRE framework (adapted):
 
 ### Unit Tests
 
-- [ ] Test case 1: [Description]
-- [ ] Test case 2: [Description]
-- [ ] Test case 3: [Description]
+- [ ] Verify LoongArch64 ABI mapping
+- [ ] Verify s390x ABI mapping
+- [ ] Verify syscall ABI registration
 
 ### Integration Tests
 
-- [ ] Integration scenario 1
-- [ ] Integration scenario 2
+- [ ] Validate architecture detection
+- [ ] Validate syscall name resolution
 
 ### Manual Testing
 
-[What you tested manually and results]
+To be completed during implementation.
 
 ---
 
 ## Implementation Notes
 
-### Week [X] Progress
+### Week 1 Progress
 
-[What you built this week, challenges faced, decisions made]
+- Selected issue.
+- Reviewed issue description and maintainer comments.
+- Identified relevant source files.
+- Began researching ABI and syscall handling in Pwndbg and Pwntools.
 
-### Week [Y] Progress
+### Week 2 Progress
 
-[Continue documenting as you work]
+TBD
 
 ### Code Changes
 
-- **Files modified:** [List]
-- **Key commits:** [Links to important commits]
-- **Approach decisions:** [Why you chose certain approaches]
+- **Files modified:** TBD
+- **Key commits:** TBD
+- **Approach decisions:** TBD
 
 ---
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when submitted]
+**PR Link:** TBD
 
-**PR Description:** [Draft or final PR description - much of the content above can be adapted]
+**PR Description:** TBD
 
 **Maintainer Feedback:**
-- [Date]: [Summary of feedback received]
-- [Date]: [How you addressed it]
 
-**Status:** [Awaiting review / Iterating / Approved / Merged]
+- TBD
+
+**Status:** Not Submitted
 
 ---
 
@@ -151,20 +162,20 @@ Using UMPIRE framework (adapted):
 
 ### Technical Skills Gained
 
-[What you learned technically]
+TBD
 
 ### Challenges Overcome
 
-[What was hard and how you solved it]
+TBD
 
 ### What I'd Do Differently Next Time
 
-[Reflection on your process]
+TBD
 
 ---
 
 ## Resources Used
 
-- [Link to helpful documentation]
-- [Tutorial or Stack Overflow post that helped]
-- [GitHub issues or discussions that helped]
+- https://github.com/pwndbg/pwndbg/issues/2889
+- https://github.com/Gallopsled/pwntools/blob/dev/pwnlib/abi.py
+- Pwndbg source code documentation

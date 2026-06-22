@@ -3,7 +3,7 @@
 **Contribution Number:** 1  
 **Student:** Angelika Szymanowska  
 **Issue:** https://github.com/pwndbg/pwndbg/issues/2889  
-**Status:** Phase II - Complete
+**Status:** Phase III - Complete
 
 ----
 
@@ -52,7 +52,9 @@ As a result, Pwndbg could not fully resolve architecture-specific ABI informatio
 
 - Windows 11
 - Visual Studio Code
+- Git Bash
 - Python
+- uv package manager
 - Local clone of the Pwndbg repository
 
 ### Steps to Reproduce
@@ -190,16 +192,14 @@ Initial validation completed successfully. Additional runtime testing may be req
 
 ### Manual Testing
 
-Compiled the modified file successfully:
+- Reviewed code changes using `git diff`.
+- Verified only the intended ABI entries were modified.
+- Created and pushed a commit to the `fix-issue-2889` branch.
+- Installed project dependencies using `uv sync`.
+- Attempted to run `./lint.sh`.
+- Attempted to run `./unit-tests.sh`.
 
-```bash
-python -m py_compile pwndbg/lib/abi.py
-```
-
-No syntax errors were reported.
-
----
-
+Linting and testing were blocked by Windows-specific environment limitations. The project requires Linux-based dependencies and build tools including `cmake`, `capstone`, and packages that are not currently available for the Windows platform.
 ## Implementation Notes
 
 ### Week 1 Progress
@@ -232,15 +232,34 @@ No syntax errors were reported.
 - Verified `pwndbg/lib/abi.py` compiles successfully.
 - Created a local commit documenting the changes.
 
+### Week 3 Progress
+
+- Installed uv package manager.
+- Created project virtual environment using uv sync.
+- Attempted project linting.
+- Attempted unit testing.
+- Investigated Windows-specific dependency and platform limitations.
+- Pushed implementation branch to GitHub.
+
+  
 ### Code Changes
 
 **Files modified:**
 
-- `pwndbg/lib/abi.py`
+- pwndbg/lib/abi.py
+
+  
+**Branch:**
+
+fix-issue-2889
+
+**Repository:**
+
+https://github.com/angelikakasia/pwndbg/tree/fix-issue-2889
 
 **Key commits:**
 
-git commit -m "Add ABI support for LoongArch64 and s390x"
+f3663d2 - Add LoongArch64 and s390x syscall ABI mappings
 
 **Approach decisions:**
 
@@ -252,15 +271,14 @@ git commit -m "Add ABI support for LoongArch64 and s390x"
 
 ## Pull Request
 
+**Status:** Ready for Pull Request
+
 **PR Link:** TBD
 
 **PR Description:** TBD
 
 **Maintainer Feedback:**
 
-- TBD
-
-**Status:** Not Submitted
 
 ---
 
@@ -276,9 +294,13 @@ git commit -m "Add ABI support for LoongArch64 and s390x"
 
 ### Challenges Overcome
 
-The main challenge was identifying where ABI resolution occurs within the Pwndbg architecture framework.
+The main challenge was configuring the Pwndbg development environment on Windows.
 
-Initially, the issue appeared to involve multiple files and syscall resolution logic. After tracing the execution path, I determined that the primary issue was the absence of ABI-related entries for LoongArch64 and s390x within the ABI lookup tables.
+The project's linting and testing workflows rely on Linux-oriented dependencies and build tools. During validation I installed uv, synchronized project dependencies, and investigated failures related to missing platform-specific components such as cmake and capstone.
+
+Although automated validation could not be fully completed on Windows, I was able to verify the implementation through code review, git diff inspection, successful commits, and branch pushes.
+
+
 
 ### What I'd Do Differently Next Time
 

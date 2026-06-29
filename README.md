@@ -3,7 +3,7 @@
 **Contribution Number:** 1  
 **Student:** Angelika Szymanowska  
 **Issue:** https://github.com/pwndbg/pwndbg/issues/2889  
-**Status:** Phase III - Complete
+**Status:** Phase VI - In Progress
 
 ----
 
@@ -241,6 +241,20 @@ Linting and testing were blocked by Windows-specific environment limitations. Th
 - Investigated Windows-specific dependency and platform limitations.
 - Pushed implementation branch to GitHub.
 
+### Week 4 Progress
+
+- Reviewed the remaining Phase IV requirements and planned the pull request workflow.
+- Revisited the implementation to verify the ABI additions and prepare for final validation.
+- Reviewed the current code changes and confirmed the implementation is ready for final testing.
+- Updated this README to reflect the current project status.
+
+**Current Status:** In Progress
+
+**Next Steps:**
+- Complete testing in a Linux environment.
+- Perform a final review of the implementation.
+- Open a pull request to the upstream Pwndbg repository.
+- Respond to maintainer feedback and iterate as needed.
   
 ### Code Changes
 
